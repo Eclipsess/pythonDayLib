@@ -13,7 +13,7 @@ personImg = personImg.convert('RGBA')
 hatImg = Image.open(hatPath)
 hatImg = hatImg.convert('RGBA')
 
-# adjust your picture to fit Christmas hat
+# adjust Christmas hat height to fit face
 adapt_h = 100  
 for face_x,face_y,face_w,face_h in faces:
 	face_x -= face_w/2
