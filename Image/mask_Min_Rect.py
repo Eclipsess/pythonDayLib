@@ -1,3 +1,7 @@
+#coding:utf-8
+‘’‘
+求mask的最小外接矩形
+’‘’
 import numpy as np
 ms = np.array([[[1,2,3],
               [0,2,0],
