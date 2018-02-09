@@ -9,15 +9,16 @@ def reduce_merge(lists):
     i = 0
     while(i < len(lists) -1):
         k = i
-        while(lists[k] + 3 > lists[k + 1]):
+        while(lists[k] + 10 > lists[k + 1] and k < (len(lists) - 2)):
             count += 1
             sums += lists[i]
             k += 1
-        if count >= 10:
+        if count >= 12:
             av = sums / count
             record.append([av,count]) 
-            sums = 0
-            count = 0
+        count = 0
+        sums = 0
+        count = 0
         i = k      
         i += 1
     return record
@@ -26,7 +27,32 @@ def blobDetect(im):
     # Read image
     #im = cv2.imread("/home/sy/Pictures/IMG_20180207_112547.jpg", cv2.IMREAD_GRAYSCALE)
     # Set up the detector with default parameters.
-    detector = cv2.SimpleBlobDetector_create()
+    # Setup SimpleBlobDetector parameters.
+    params = cv2.SimpleBlobDetector_Params()
+
+    # Change thresholds
+    params.minThreshold = 10
+    params.maxThreshold = 200
+
+
+    # Filter by Area.
+    params.filterByArea = True
+    params.minArea = 100
+    params.maxArea = 1400
+
+    # Filter by Circularity
+    params.filterByCircularity = True
+    params.minCircularity = 0.1
+
+    # Filter by Convexity
+    params.filterByConvexity = True
+    params.minConvexity = 0.87
+
+    # Filter by Inertia
+    params.filterByInertia = True
+    params.minInertiaRatio = 0.01
+
+    detector = cv2.SimpleBlobDetector_create(params)
     # Detect blobs.
     keypoints = detector.detect(im)
     xy = []
@@ -49,5 +75,7 @@ def blobDetect(im):
     cv2.imshow("Keypoints", im_with_keypoints)
     cv2.waitKey(0)
 
-im = cv2.imread("/home/sy/Pictures/IMG_20180207_112547.jpg", cv2.IMREAD_GRAYSCALE)
+im = cv2.imread("/home/sy/Pictures/IMG_20180207_111956.jpg", cv2.IMREAD_GRAYSCALE)
+
+#im = cv2.GaussianBlur(im, (5,5), 3)
 blobDetect(im)
